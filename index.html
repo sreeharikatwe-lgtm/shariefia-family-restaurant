@@ -3,1954 +3,1537 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Shariefia Family Restaurant | Anekal</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Shariefia | Smart Restaurant Order System</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 
-/* =========================================================
-   GLOBAL
-========================================================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+:root{
+  --wine:#6e1730;
+  --wine-dark:#3d0b1b;
+  --gold:#d9ad55;
+  --gold-light:#f4d58b;
+  --cream:#fff8eb;
+  --bg:#10090c;
+  --card:#1b1014;
+  --card2:#24141a;
+  --text:#fff8ef;
+  --muted:#b9a8ad;
+  --green:#2bb673;
+  --red:#d94c55;
+  --orange:#e99a3a;
+  --shadow:0 15px 45px rgba(0,0,0,.35);
 }
 
-html{
-    scroll-behavior:smooth;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-    background:#100b09;
-    color:#f7efe4;
-    font-family:"DM Sans",sans-serif;
-    overflow-x:hidden;
+  font-family:Poppins,sans-serif;
+  background:
+    radial-gradient(circle at top right,rgba(110,23,48,.35),transparent 35%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
 }
 
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-img{
-    display:block;
-    width:100%;
+button,input,textarea{
+  font-family:inherit;
 }
 
 button{
-    font-family:inherit;
+  cursor:pointer;
 }
 
-.container{
-    width:min(1150px,92%);
-    margin:auto;
+.hidden{
+  display:none!important;
 }
 
-.gold{
-    color:#d7ad61;
-}
-
-/* =========================================================
-   PAGE LOADER
-========================================================= */
+/* LOADER */
 
 .loader{
-    position:fixed;
-    inset:0;
-    background:#100b09;
-    z-index:9999;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    transition:opacity .7s,visibility .7s;
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
 }
 
-.loader.hide{
-    opacity:0;
-    visibility:hidden;
+.loader-box{
+  text-align:center;
 }
 
 .loader-logo{
-    font-family:Cinzel,serif;
-    font-size:32px;
-    color:#d7ad61;
-    letter-spacing:5px;
+  width:75px;
+  height:75px;
+  border:2px solid var(--gold);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:auto;
+  font-family:Cinzel;
+  color:var(--gold);
+  font-size:28px;
+  animation:pulse 1.5s infinite;
 }
 
-.loader-line{
-    width:100px;
-    height:2px;
-    background:#d7ad61;
-    margin-top:18px;
-    animation:loadline 1.4s infinite;
+.loader h2{
+  font-family:Cinzel;
+  margin-top:18px;
 }
 
-@keyframes loadline{
-    0%{transform:scaleX(0);transform-origin:left}
-    50%{transform:scaleX(1);transform-origin:left}
-    100%{transform:scaleX(0);transform-origin:right}
+.loader p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:6px;
 }
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-.navbar{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    z-index:1000;
-    background:rgba(16,11,9,.82);
-    backdrop-filter:blur(16px);
-    border-bottom:1px solid rgba(215,173,97,.15);
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.08)}
 }
 
-.nav-inner{
-    height:74px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+/* HEADER */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(16,9,12,.92);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid rgba(217,173,85,.18);
 }
 
-.logo{
-    font-family:Cinzel,serif;
-    font-size:20px;
-    font-weight:700;
-    letter-spacing:3px;
-    color:#d7ad61;
+.nav{
+  max-width:1200px;
+  margin:auto;
+  padding:15px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
 }
 
-.logo small{
-    display:block;
-    text-align:center;
-    font-family:"DM Sans",sans-serif;
-    font-size:7px;
-    color:#ddd0c1;
-    letter-spacing:4px;
-    margin-top:2px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
 }
 
-.nav-links{
-    display:flex;
-    gap:25px;
+.brand-icon{
+  width:43px;
+  height:43px;
+  border:1px solid var(--gold);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--gold);
+  font-family:Cinzel;
+  font-size:17px;
 }
 
-.nav-links a{
-    font-size:12px;
-    color:#ded5cc;
-    position:relative;
-    transition:.3s;
+.brand h1{
+  font-family:Cinzel;
+  font-size:17px;
 }
 
-.nav-links a:after{
-    content:"";
-    position:absolute;
-    left:0;
-    bottom:-8px;
-    width:0;
-    height:1px;
-    background:#d7ad61;
-    transition:.3s;
+.brand span{
+  display:block;
+  font-size:9px;
+  color:var(--gold);
+  letter-spacing:2px;
+  margin-top:2px;
 }
 
-.nav-links a:hover{
-    color:#d7ad61;
+.mode-btn{
+  background:linear-gradient(135deg,var(--gold),#a97826);
+  color:#1a0d0f;
+  border:0;
+  padding:10px 14px;
+  border-radius:12px;
+  font-weight:700;
 }
 
-.nav-links a:hover:after{
-    width:100%;
-}
-
-.menu-btn{
-    display:none;
-    background:none;
-    border:0;
-    color:#d7ad61;
-    font-size:27px;
-    cursor:pointer;
-}
-
-/* =========================================================
-   HERO
-========================================================= */
+/* HERO */
 
 .hero{
-    min-height:100vh;
-    position:relative;
-    display:flex;
-    align-items:center;
-    overflow:hidden;
-
-    background:
-    linear-gradient(
-        90deg,
-        rgba(16,11,9,.97),
-        rgba(38,15,10,.75),
-        rgba(16,11,9,.25)
-    ),
-    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=90");
-
-    background-size:cover;
-    background-position:center;
+  max-width:1200px;
+  margin:auto;
+  padding:28px 18px 18px;
 }
 
-.hero:before{
-    content:"";
-    position:absolute;
-    width:500px;
-    height:500px;
-    border-radius:50%;
-    right:-200px;
-    top:10%;
-    background:rgba(215,173,97,.08);
-    filter:blur(10px);
+.hero-card{
+  background:
+    linear-gradient(110deg,rgba(61,11,27,.96),rgba(61,11,27,.72)),
+    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85")
+    center/cover;
+  min-height:220px;
+  border-radius:25px;
+  padding:30px 24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  box-shadow:var(--shadow);
+  border:1px solid rgba(217,173,85,.22);
 }
 
-.hero-content{
-    position:relative;
-    z-index:2;
-    max-width:730px;
-    padding-top:75px;
+.hero small{
+  color:var(--gold-light);
+  letter-spacing:3px;
+  font-weight:600;
 }
 
-.hero-tag{
-    color:#d7ad61;
-    letter-spacing:5px;
-    font-size:10px;
-    text-transform:uppercase;
-    animation:fadeUp 1s .2s both;
+.hero h2{
+  font-family:Cinzel;
+  font-size:30px;
+  margin:9px 0;
 }
 
-.hero h1{
-    font-family:Cinzel,serif;
-    font-size:clamp(45px,9vw,88px);
-    line-height:1;
-    margin-top:18px;
-    animation:fadeUp 1s .35s both;
+.hero p{
+  color:#eadfe2;
+  font-size:13px;
+  max-width:580px;
 }
 
-.hero h1 span{
-    color:#d7ad61;
+/* MAIN */
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:15px 18px 60px;
 }
 
-.hero-description{
-    max-width:590px;
-    color:#d6cdc3;
-    line-height:1.9;
-    font-size:15px;
-    margin-top:25px;
-    animation:fadeUp 1s .5s both;
+.section-title{
+  margin:20px 0 14px;
 }
 
-.hero-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-    margin-top:32px;
-    animation:fadeUp 1s .65s both;
+.section-title h2{
+  font-family:Cinzel;
+  font-size:22px;
 }
 
-.btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-height:48px;
-    padding:0 22px;
-    font-size:12px;
-    font-weight:700;
-    border-radius:3px;
-    transition:.35s;
+.section-title p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
 }
 
-.btn-gold{
-    background:#d7ad61;
-    color:#160e0a;
+/* TABLES */
+
+.table-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
 }
 
-.btn-gold:hover{
-    transform:translateY(-4px);
-    box-shadow:0 15px 35px rgba(215,173,97,.22);
+.table{
+  border:1px solid rgba(217,173,85,.2);
+  background:var(--card);
+  border-radius:16px;
+  padding:16px 10px;
+  text-align:center;
+  transition:.25s;
 }
 
-.btn-outline{
-    border:1px solid #d7ad61;
-    color:#d7ad61;
+.table:hover{
+  transform:translateY(-3px);
 }
 
-.btn-outline:hover{
-    background:#d7ad61;
-    color:#160e0a;
+.table.active{
+  background:linear-gradient(145deg,var(--wine),var(--wine-dark));
+  border-color:var(--gold);
+  box-shadow:0 8px 25px rgba(110,23,48,.4);
 }
 
-.hero-scroll{
-    position:absolute;
-    bottom:35px;
-    left:50%;
-    transform:translateX(-50%);
-    color:#aaa;
-    font-size:9px;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    animation:bounce 2s infinite;
+.table-icon{
+  font-size:24px;
 }
 
-@keyframes bounce{
-    0%,100%{transform:translate(-50%,0)}
-    50%{transform:translate(-50%,8px)}
+.table strong{
+  display:block;
+  margin-top:5px;
+  font-size:13px;
 }
 
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(35px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+.table small{
+  color:var(--muted);
+  font-size:9px;
 }
 
-/* =========================================================
-   SECTION
-========================================================= */
+/* CATEGORY */
 
-section{
-    padding:100px 0;
+.categories{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:4px 0 12px;
+  scrollbar-width:none;
 }
 
-.section-head{
-    text-align:center;
-    margin-bottom:50px;
+.categories::-webkit-scrollbar{
+  display:none;
 }
 
-.section-head small{
-    color:#d7ad61;
-    letter-spacing:5px;
-    text-transform:uppercase;
-    font-size:9px;
+.cat{
+  white-space:nowrap;
+  padding:10px 14px;
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.07);
+  color:#d8cbd0;
+  border-radius:30px;
+  font-size:12px;
 }
 
-.section-head h2{
-    font-family:Cinzel,serif;
-    font-size:clamp(30px,6vw,48px);
-    margin-top:9px;
+.cat.active{
+  background:var(--gold);
+  color:#231116;
+  font-weight:700;
 }
 
-.section-head p{
-    color:#8e8580;
-    font-size:13px;
-    margin-top:10px;
-}
-
-/* =========================================================
-   ABOUT
-========================================================= */
-
-.about{
-    background:#100b09;
-}
-
-.about-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:55px;
-    align-items:center;
-}
-
-.about-image{
-    height:480px;
-    position:relative;
-    overflow:hidden;
-}
-
-.about-image img{
-    height:100%;
-    object-fit:cover;
-    transition:transform 1s;
-}
-
-.about-image:hover img{
-    transform:scale(1.06);
-}
-
-.about-image:after{
-    content:"";
-    position:absolute;
-    inset:14px;
-    border:1px solid rgba(215,173,97,.6);
-    pointer-events:none;
-}
-
-.about-content h3{
-    font-family:Cinzel,serif;
-    color:#d7ad61;
-    font-size:31px;
-    margin-bottom:20px;
-}
-
-.about-content p{
-    color:#b7aea7;
-    font-size:14px;
-    line-height:1.95;
-    margin-bottom:15px;
-}
-
-.signature{
-    margin-top:28px;
-    color:#d7ad61;
-    font-family:Cinzel,serif;
-    font-size:20px;
-}
-
-/* =========================================================
-   COUNTERS
-========================================================= */
-
-.counter-section{
-    background:#180f0c;
-    border-top:1px solid rgba(215,173,97,.1);
-    border-bottom:1px solid rgba(215,173,97,.1);
-}
-
-.counter-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-}
-
-.counter{
-    text-align:center;
-    padding:20px;
-}
-
-.counter-number{
-    font-family:Cinzel,serif;
-    font-size:37px;
-    color:#d7ad61;
-}
-
-.counter-label{
-    color:#877d75;
-    font-size:10px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    margin-top:5px;
-}
-
-/* =========================================================
-   EXPERIENCE CARDS
-========================================================= */
-
-.experience{
-    background:#100b09;
-}
-
-.experience-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-}
-
-.experience-card{
-    padding:35px 25px;
-    background:#18110e;
-    border:1px solid rgba(215,173,97,.14);
-    text-align:center;
-    transition:.4s;
-}
-
-.experience-card:hover{
-    transform:translateY(-10px);
-    border-color:#d7ad61;
-}
-
-.experience-icon{
-    font-size:38px;
-    margin-bottom:20px;
-}
-
-.experience-card h3{
-    font-family:Cinzel,serif;
-    color:#f2e7d9;
-    font-size:19px;
-}
-
-.experience-card p{
-    color:#817873;
-    font-size:11px;
-    line-height:1.8;
-    margin-top:9px;
-}
-
-/* =========================================================
-   MENU
-========================================================= */
-
-.menu{
-    background:#0d0907;
-}
+/* MENU */
 
 .menu-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:22px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
 }
 
-.menu-card{
-    background:#17100d;
-    border:1px solid rgba(215,173,97,.13);
-    overflow:hidden;
-    transition:.4s;
+.food{
+  background:linear-gradient(145deg,var(--card2),var(--card));
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 8px 25px rgba(0,0,0,.15);
+  transition:.25s;
 }
 
-.menu-card:hover{
-    transform:translateY(-8px);
-    border-color:#d7ad61;
-    box-shadow:0 20px 50px rgba(0,0,0,.3);
+.food:hover{
+  transform:translateY(-4px);
+  border-color:rgba(217,173,85,.35);
 }
 
-.menu-image{
-    height:240px;
-    overflow:hidden;
+.food-img{
+  height:145px;
+  background-size:cover;
+  background-position:center;
 }
 
-.menu-image img{
-    height:100%;
-    object-fit:cover;
-    transition:.6s;
+.food-body{
+  padding:13px;
 }
 
-.menu-card:hover .menu-image img{
-    transform:scale(1.08);
+.food h3{
+  font-size:14px;
 }
 
-.menu-info{
-    padding:22px;
+.food p{
+  color:var(--muted);
+  font-size:10px;
+  margin:4px 0 10px;
+  min-height:30px;
 }
 
-.menu-category{
-    color:#d7ad61;
-    font-size:8px;
-    letter-spacing:3px;
+.food-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.menu-info h3{
-    font-family:Cinzel,serif;
-    font-size:20px;
-    margin-top:7px;
+.price{
+  color:var(--gold-light);
+  font-weight:700;
 }
 
-.menu-info p{
-    color:#817873;
-    font-size:11px;
-    line-height:1.7;
-    margin-top:7px;
+.add-btn{
+  background:var(--wine);
+  color:white;
+  border:1px solid rgba(217,173,85,.3);
+  border-radius:10px;
+  padding:8px 12px;
+  font-weight:700;
 }
 
-/* =========================================================
-   CTA
-========================================================= */
+/* ORDER */
 
-.cta{
-    min-height:470px;
-    display:flex;
-    align-items:center;
-    text-align:center;
-
-    background:
-    linear-gradient(
-        rgba(16,8,5,.78),
-        rgba(16,8,5,.91)
-    ),
-    url("https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1900&q=90");
-
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
+.order-box{
+  background:linear-gradient(145deg,#241219,#160c10);
+  border:1px solid rgba(217,173,85,.25);
+  border-radius:22px;
+  padding:18px;
+  margin-top:20px;
 }
 
-.cta-content{
-    max-width:760px;
-    margin:auto;
+.order-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
 }
 
-.cta-content small{
-    color:#d7ad61;
-    letter-spacing:5px;
+.order-head h2{
+  font-family:Cinzel;
+  font-size:18px;
 }
 
-.cta-content h2{
-    font-family:Cinzel,serif;
-    font-size:clamp(32px,7vw,55px);
-    margin-top:13px;
+.table-label{
+  color:var(--gold-light);
+  font-size:12px;
 }
 
-.cta-content p{
-    color:#d2c8bf;
-    line-height:1.8;
-    font-size:14px;
-    margin:18px auto 30px;
+.order-item{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
 
-/* =========================================================
-   GALLERY
-========================================================= */
-
-.gallery{
-    background:#100b09;
+.order-item-info{
+  flex:1;
 }
 
-.gallery-grid{
-    display:grid;
-    grid-template-columns:1.2fr .8fr .8fr;
-    grid-auto-rows:220px;
-    gap:10px;
+.order-item strong{
+  font-size:13px;
 }
 
-.gallery-item{
-    overflow:hidden;
-    position:relative;
+.order-item small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
 }
 
-.gallery-item:first-child{
-    grid-row:span 2;
+.qty{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-.gallery-item img{
-    height:100%;
-    object-fit:cover;
-    transition:.6s;
+.qty button{
+  width:27px;
+  height:27px;
+  border-radius:8px;
+  border:1px solid rgba(217,173,85,.3);
+  background:#2a151c;
+  color:white;
 }
 
-.gallery-item:hover img{
-    transform:scale(1.08);
+.total{
+  display:flex;
+  justify-content:space-between;
+  margin-top:15px;
+  padding-top:13px;
+  border-top:1px solid rgba(217,173,85,.25);
 }
 
-.gallery-item:after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(transparent,rgba(0,0,0,.3));
+.total strong:last-child{
+  color:var(--gold-light);
+  font-size:20px;
 }
 
-/* =========================================================
-   REVIEWS
-========================================================= */
-
-.reviews{
-    background:#180f0c;
+.notes{
+  width:100%;
+  min-height:80px;
+  background:#120a0d;
+  color:white;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  padding:12px;
+  margin-top:15px;
+  resize:none;
+  outline:none;
 }
 
-.review-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
+.send-btn{
+  width:100%;
+  margin-top:12px;
+  padding:15px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(135deg,var(--gold),#a87828);
+  color:#1b0c10;
+  font-weight:800;
+  font-size:14px;
 }
 
-.review{
-    background:#120c0a;
-    padding:28px;
-    border:1px solid rgba(215,173,97,.13);
+/* DASHBOARD */
+
+.dashboard{
+  margin-top:45px;
+  padding-top:35px;
+  border-top:1px solid rgba(217,173,85,.15);
 }
 
-.stars{
-    color:#d7ad61;
-    letter-spacing:3px;
+.dashboard-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
 }
 
-.review p{
-    color:#b6aaa1;
-    font-size:12px;
-    line-height:1.9;
-    margin-top:15px;
+.dashboard-head h2{
+  font-family:Cinzel;
+  font-size:22px;
 }
 
-.review-name{
-    display:block;
-    margin-top:20px;
-    font-weight:600;
-    color:#eee;
-    font-size:12px;
+.clear-btn{
+  background:#2b1117;
+  border:1px solid rgba(217,173,85,.2);
+  color:#f0dfe4;
+  padding:9px 12px;
+  border-radius:10px;
+  font-size:11px;
 }
 
-/* =========================================================
-   CONTACT
-========================================================= */
-
-.contact{
-    background:#0d0907;
+.order-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:15px;
 }
 
-.contact-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
+.kitchen-card{
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:18px;
+  padding:16px;
+  position:relative;
+  overflow:hidden;
 }
 
-.contact-card{
-    background:#17100d;
-    padding:35px;
-    border:1px solid rgba(215,173,97,.14);
+.status-line{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:4px;
 }
 
-.contact-card h3{
-    font-family:Cinzel,serif;
-    color:#d7ad61;
-    font-size:27px;
-    margin-bottom:25px;
+.status-new{background:var(--red)}
+.status-preparing{background:var(--orange)}
+.status-ready{background:var(--green)}
+.status-served{background:#7b7280}
+
+.kitchen-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:5px;
 }
 
-.contact-row{
-    margin:20px 0;
+.kitchen-top h3{
+  font-size:16px;
 }
 
-.contact-row small{
-    display:block;
-    color:#756b65;
-    font-size:8px;
-    letter-spacing:3px;
-    text-transform:uppercase;
+.badge{
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:9px;
+  font-weight:700;
 }
 
-.contact-row strong{
-    display:block;
-    margin-top:5px;
-    font-size:14px;
+.badge.new{
+  background:rgba(217,76,85,.16);
+  color:#ff8c94;
 }
 
-.map{
-    min-height:390px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-
-    background:
-    linear-gradient(rgba(30,10,5,.52),rgba(0,0,0,.78)),
-    url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=90");
-
-    background-size:cover;
-    background-position:center;
+.badge.preparing{
+  background:rgba(233,154,58,.15);
+  color:#ffc26f;
 }
 
-.map h3{
-    font-family:Cinzel,serif;
-    font-size:28px;
+.badge.ready{
+  background:rgba(43,182,115,.15);
+  color:#64e5a7;
 }
 
-.map p{
-    color:#ddd;
-    margin:8px 0 22px;
+.badge.served{
+  background:rgba(123,114,128,.15);
+  color:#bdb5c1;
 }
 
-/* =========================================================
-   FOOTER
-========================================================= */
+.kitchen-time{
+  color:var(--muted);
+  font-size:9px;
+  margin-top:3px;
+}
+
+.kitchen-items{
+  margin:13px 0;
+  border-top:1px solid rgba(255,255,255,.06);
+  padding-top:10px;
+}
+
+.kitchen-item{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  padding:5px 0;
+}
+
+.kitchen-item span:last-child{
+  color:var(--gold-light);
+}
+
+.kitchen-note{
+  background:#120a0d;
+  padding:9px;
+  border-radius:9px;
+  color:#d4c4c9;
+  font-size:10px;
+  margin-bottom:12px;
+}
+
+.status-actions{
+  display:flex;
+  gap:6px;
+}
+
+.status-actions button{
+  flex:1;
+  padding:8px 5px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.08);
+  background:#25131a;
+  color:white;
+  font-size:9px;
+}
+
+.status-actions button:hover{
+  border-color:var(--gold);
+}
+
+/* EMPTY */
+
+.empty{
+  padding:35px 15px;
+  text-align:center;
+  color:var(--muted);
+  border:1px dashed rgba(255,255,255,.1);
+  border-radius:15px;
+  font-size:12px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  bottom:22px;
+  left:50%;
+  transform:translateX(-50%) translateY(100px);
+  background:#fff7ea;
+  color:#321017;
+  padding:12px 18px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:700;
+  z-index:500;
+  box-shadow:0 10px 35px rgba(0,0,0,.4);
+  transition:.35s;
+}
+
+.toast.show{
+  transform:translateX(-50%) translateY(0);
+}
+
+/* FOOTER */
 
 footer{
-    padding:45px 0;
-    text-align:center;
-    background:#050403;
-    border-top:1px solid rgba(215,173,97,.15);
+  text-align:center;
+  padding:35px 15px;
+  border-top:1px solid rgba(255,255,255,.06);
+  color:var(--muted);
+  font-size:10px;
 }
 
-.footer-logo{
-    font-family:Cinzel,serif;
-    color:#d7ad61;
-    letter-spacing:4px;
-    font-size:22px;
+footer strong{
+  color:var(--gold-light);
 }
 
-footer p{
-    color:#666;
-    font-size:10px;
-    margin-top:8px;
-}
-
-/* =========================================================
-   FLOATING BUTTONS
-========================================================= */
-
-.floating{
-    position:fixed;
-    right:18px;
-    bottom:18px;
-    z-index:900;
-    display:flex;
-    flex-direction:column;
-    gap:9px;
-}
-
-.float-btn{
-    width:52px;
-    height:52px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:21px;
-    box-shadow:0 8px 25px rgba(0,0,0,.4);
-}
-
-.float-call{
-    background:#d7ad61;
-    color:#111;
-}
-
-.float-whatsapp{
-    background:#25d366;
-    color:white;
-}
-
-/* =========================================================
-   SCROLL REVEAL
-========================================================= */
-
-.reveal{
-    opacity:0;
-    transform:translateY(40px);
-    transition:opacity .8s,transform .8s;
-}
-
-.reveal.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
+/* RESPONSIVE */
 
 @media(max-width:850px){
+  .menu-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-    .nav-links{
-        position:absolute;
-        top:74px;
-        left:0;
-        width:100%;
-        background:#100b09;
-        border-bottom:1px solid rgba(215,173,97,.15);
-        display:none;
-        flex-direction:column;
-        padding:20px 6%;
-        gap:20px;
-    }
-
-    .nav-links.active{
-        display:flex;
-    }
-
-    .menu-btn{
-        display:block;
-    }
-
-    .hero{
-        min-height:780px;
-        background-position:65% center;
-    }
-
-    .hero h1{
-        font-size:50px;
-    }
-
-    .about-grid,
-    .contact-grid{
-        grid-template-columns:1fr;
-    }
-
-    .about-image{
-        height:350px;
-    }
-
-    .counter-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .experience-grid{
-        grid-template-columns:1fr;
-    }
-
-    .menu-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .review-grid{
-        grid-template-columns:1fr;
-    }
-
+  .order-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 
-@media(max-width:520px){
+@media(max-width:600px){
+  .hero h2{
+    font-size:25px;
+  }
 
-    section{
-        padding:75px 0;
-    }
+  .table-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
 
-    .hero h1{
-        font-size:43px;
-    }
+  .table{
+    padding:12px 5px;
+  }
 
-    .hero-description{
-        font-size:13px;
-    }
+  .menu-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
 
-    .menu-grid{
-        grid-template-columns:1fr;
-    }
+  .food-img{
+    height:120px;
+  }
 
-    .menu-image{
-        height:230px;
-    }
+  .food-body{
+    padding:10px;
+  }
 
-    .gallery-grid{
-        grid-template-columns:1fr 1fr;
-        grid-auto-rows:170px;
-    }
+  .food h3{
+    font-size:12px;
+  }
 
-    .gallery-item:first-child{
-        grid-column:span 2;
-        grid-row:span 1;
-    }
+  .food p{
+    font-size:9px;
+  }
 
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
+  .order-grid{
+    grid-template-columns:1fr;
+  }
 
-    .contact-card{
-        padding:25px;
-    }
+  .brand h1{
+    font-size:14px;
+  }
 
+  .mode-btn{
+    font-size:10px;
+    padding:8px 10px;
+  }
 }
 
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
-
-@media(prefers-reduced-motion:reduce){
-
-    *,
-    *:before,
-    *:after{
-        animation:none!important;
-        transition:none!important;
-        scroll-behavior:auto!important;
-    }
-
+@media(max-width:380px){
+  .table-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- =======================================================
-     LOADER
-======================================================= -->
-
+<!-- LOADER -->
 <div class="loader" id="loader">
-
-<div class="loader-logo">
-SHARIEFIA
+  <div class="loader-box">
+    <div class="loader-logo">S</div>
+    <h2>Shariefia</h2>
+    <p>Smart Restaurant System</p>
+  </div>
 </div>
 
-<div class="loader-line"></div>
+<!-- HEADER -->
+<header>
+  <div class="nav">
 
-</div>
+    <div class="brand">
+      <div class="brand-icon">S</div>
+      <div>
+        <h1>Shariefia</h1>
+        <span>FAMILY RESTAURANT</span>
+      </div>
+    </div>
 
+    <button class="mode-btn" onclick="scrollToDashboard()">
+      👨‍🍳 Kitchen
+    </button>
 
-<!-- =======================================================
-     NAVIGATION
-======================================================= -->
-
-<nav class="navbar">
-
-<div class="container nav-inner">
-
-<a href="#home" class="logo">
-SHARIEFIA
-<small>FAMILY RESTAURANT</small>
-</a>
-
-<div class="nav-links" id="navLinks">
-
-<a href="#home">Home</a>
-<a href="#about">About</a>
-<a href="#experience">Experience</a>
-<a href="#menu">Menu</a>
-<a href="#gallery">Gallery</a>
-<a href="#reviews">Reviews</a>
-<a href="#contact">Contact</a>
-
-</div>
-
-<button class="menu-btn" onclick="toggleMenu()">
-☰
-</button>
-
-</div>
-
-</nav>
-
-
-<!-- =======================================================
-     HOME
-======================================================= -->
-
-<header class="hero" id="home">
-
-<div class="container hero-content">
-
-<div class="hero-tag">
-Anekal • Karnataka
-</div>
-
-<h1>
-Authentic<br>
-<span>Flavours.</span>
-</h1>
-
-<p class="hero-description">
-Welcome to Shariefia Family Restaurant — where delicious
-food, warm hospitality and memorable family moments come
-together around one table.
-</p>
-
-<div class="hero-buttons">
-
-<a href="#menu" class="btn btn-gold">
-🍽 Explore Menu
-</a>
-
-<a href="tel:+919742118589" class="btn btn-outline">
-📞 Call Restaurant
-</a>
-
-</div>
-
-</div>
-
-<div class="hero-scroll">
-Scroll to discover ↓
-</div>
-
+  </div>
 </header>
 
-
-<!-- =======================================================
-     ABOUT
-======================================================= -->
-
-<section class="about" id="about">
-
-<div class="container">
-
-<div class="section-head reveal">
-
-<small>Our Story</small>
-
-<h2>A Table Full of Memories</h2>
-
-<p>Good food brings people together.</p>
-
-</div>
-
-
-<div class="about-grid reveal">
-
-<div class="about-image">
-
-<img
-src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=90"
-alt="Restaurant">
-
-</div>
-
-
-<div class="about-content">
-
-<h3>Welcome to Shariefia</h3>
-
-<p>
-Shariefia Family Restaurant is a welcoming destination
-for families, friends and food lovers in Anekal.
-</p>
-
-<p>
-From aromatic biryani and delicious starters to satisfying
-family meals, every visit is about good food, good company
-and memorable moments.
-</p>
-
-<p>
-Our goal is simple — serve food that makes people want to
-come back and share another meal together.
-</p>
-
-<div class="signature">
-Shariefia Family Restaurant
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-card">
+    <small>SMART ORDER SYSTEM</small>
+    <h2>Fast. Simple. Organized.</h2>
+    <p>
+      Take customer orders directly from the table and send them
+      instantly to the restaurant kitchen dashboard.
+    </p>
+  </div>
 </section>
 
+<main class="container">
 
-<!-- =======================================================
-     COUNTERS
-======================================================= -->
+  <!-- TABLE SELECTION -->
 
-<section class="counter-section">
+  <div class="section-title">
+    <h2>Select Table</h2>
+    <p>Choose the table where the customer is seated.</p>
+  </div>
 
-<div class="container">
+  <div class="table-grid" id="tableGrid"></div>
 
-<div class="counter-grid reveal">
 
-<div class="counter">
+  <!-- MENU -->
 
-<div class="counter-number" data-target="100">0</div>
+  <div class="section-title">
+    <h2>Restaurant Menu</h2>
+    <p>Select food items and add them to the order.</p>
+  </div>
 
-<div class="counter-label">
-Happy Moments
-</div>
+  <div class="categories" id="categories"></div>
 
-</div>
+  <div class="menu-grid" id="menuGrid"></div>
 
 
-<div class="counter">
+  <!-- CURRENT ORDER -->
 
-<div class="counter-number" data-target="25">0</div>
+  <div class="order-box">
 
-<div class="counter-label">
-Food Choices
-</div>
+    <div class="order-head">
+      <h2>Current Order</h2>
+      <div class="table-label" id="selectedTable">
+        Select table
+      </div>
+    </div>
 
-</div>
+    <div id="orderItems">
+      <div class="empty">
+        No items added yet.<br>
+        Select food from the menu above.
+      </div>
+    </div>
 
+    <textarea
+      class="notes"
+      id="orderNotes"
+      placeholder="Customer requirements... Example: Less spicy, no onion, extra gravy, etc."
+    ></textarea>
 
-<div class="counter">
+    <div class="total">
+      <strong>Total</strong>
+      <strong id="totalAmount">₹0</strong>
+    </div>
 
-<div class="counter-number" data-target="4">0</div>
+    <button class="send-btn" onclick="sendOrder()">
+      🚀 SEND ORDER TO KITCHEN
+    </button>
 
-<div class="counter-label">
-Dining Services
-</div>
+  </div>
 
-</div>
 
+  <!-- KITCHEN DASHBOARD -->
 
-<div class="counter">
+  <section class="dashboard" id="dashboard">
 
-<div class="counter-number" data-target="1">0</div>
+    <div class="dashboard-head">
+      <div>
+        <h2>Kitchen Dashboard</h2>
+        <p style="font-size:11px;color:#a9959c;margin-top:4px;">
+          Manage incoming restaurant orders
+        </p>
+      </div>
 
-<div class="counter-label">
-Family Destination
-</div>
+      <button class="clear-btn" onclick="clearOrders()">
+        Clear Orders
+      </button>
+    </div>
 
-</div>
+    <div class="order-grid" id="kitchenOrders"></div>
 
-</div>
+  </section>
 
-</div>
-
-</section>
-
-
-<!-- =======================================================
-     EXPERIENCE
-======================================================= -->
-
-<section class="experience" id="experience">
-
-<div class="container">
-
-<div class="section-head reveal">
-
-<small>Why Shariefia</small>
-
-<h2>More Than Just a Meal</h2>
-
-<p>A complete dining experience for every occasion.</p>
-
-</div>
-
-
-<div class="experience-grid">
-
-<div class="experience-card reveal">
-
-<div class="experience-icon">
-🍛
-</div>
-
-<h3>Rich Flavours</h3>
-
-<p>
-Enjoy aromatic dishes and delicious flavours prepared
-to make every meal special.
-</p>
-
-</div>
-
-
-<div class="experience-card reveal">
-
-<div class="experience-icon">
-👨‍👩‍👧
-</div>
-
-<h3>Family Dining</h3>
-
-<p>
-A comfortable place to spend quality time with the people
-who matter most.
-</p>
-
-</div>
-
-
-<div class="experience-card reveal">
-
-<div class="experience-icon">
-🎉
-</div>
-
-<h3>Special Moments</h3>
-
-<p>
-Perfect for gatherings, celebrations and memorable
-occasions with family and friends.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =======================================================
-     MENU
-======================================================= -->
-
-<section class="menu" id="menu">
-
-<div class="container">
-
-<div class="section-head reveal">
-
-<small>From Our Kitchen</small>
-
-<h2>Signature Selection</h2>
-
-<p>Discover some of the flavours you can enjoy at Shariefia.</p>
-
-</div>
-
-
-<div class="menu-grid">
-
-
-<div class="menu-card reveal">
-
-<div class="menu-image">
-
-<img
-src="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=1200&q=90"
-alt="Biryani">
-
-</div>
-
-<div class="menu-info">
-
-<div class="menu-category">
-SIGNATURE
-</div>
-
-<h3>Royal Biryani</h3>
-
-<p>
-Fragrant rice, rich spices and irresistible aroma.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="menu-card reveal">
-
-<div class="menu-image">
-
-<img
-src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=1200&q=90"
-alt="Kebab">
-
-</div>
-
-<div class="menu-info">
-
-<div class="menu-category">
-FROM THE GRILL
-</div>
-
-<h3>Kebabs</h3>
-
-<p>
-Juicy grilled favourites packed with flavour.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="menu-card reveal">
-
-<div class="menu-image">
-
-<img
-src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1200&q=90"
-alt="Indian starters">
-
-</div>
-
-<div class="menu-info">
-
-<div class="menu-category">
-FAVOURITES
-</div>
-
-<h3>Starters</h3>
-
-<p>
-Perfect bites to begin your dining experience.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="menu-card reveal">
-
-<div class="menu-image">
-
-<img
-src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=90"
-alt="Indian food">
-
-</div>
-
-<div class="menu-info">
-
-<div class="menu-category">
-SPECIAL
-</div>
-
-<h3>Indian Favourites</h3>
-
-<p>
-Comforting dishes prepared for every appetite.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="menu-card reveal">
-
-<div class="menu-image">
-
-<img
-src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=90"
-alt="Restaurant food">
-
-</div>
-
-<div class="menu-info">
-
-<div class="menu-category">
-FAMILY
-</div>
-
-<h3>Family Meals</h3>
-
-<p>
-Delicious choices made for sharing around the table.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="menu-card reveal">
-
-<div class="menu-image">
-
-<img
-src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=90"
-alt="Family dining">
-
-</div>
-
-<div class="menu-info">
-
-<div class="menu-category">
-SHARIEFIA
-</div>
-
-<h3>Dining Experience</h3>
-
-<p>
-Good food, warm hospitality and memorable moments.
-</p>
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<div style="text-align:center;margin-top:40px;">
-
-<a href="tel:+919742118589" class="btn btn-gold">
-📞 Ask About Today's Menu
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =======================================================
-     CTA
-======================================================= -->
-
-<section class="cta">
-
-<div class="container">
-
-<div class="cta-content reveal">
-
-<small>THE SHARIEFIA EXPERIENCE</small>
-
-<h2>Good Food.<br>Great Company.</h2>
-
-<p>
-Bring your family, meet your friends and make your next
-meal a memorable one.
-</p>
-
-<a href="#contact" class="btn btn-gold">
-Plan Your Visit
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =======================================================
-     GALLERY
-======================================================= -->
-
-<section class="gallery" id="gallery">
-
-<div class="container">
-
-<div class="section-head reveal">
-
-<small>Visual Flavours</small>
-
-<h2>A Glimpse Inside</h2>
-
-<p>Food, atmosphere and moments worth sharing.</p>
-
-</div>
-
-
-<div class="gallery-grid reveal">
-
-
-<div class="gallery-item">
-
-<img
-src="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=1200&q=90"
-alt="Biryani">
-
-</div>
-
-
-<div class="gallery-item">
-
-<img
-src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=1000&q=90"
-alt="Kebabs">
-
-</div>
-
-
-<div class="gallery-item">
-
-<img
-src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=90"
-alt="Indian food">
-
-</div>
-
-
-<div class="gallery-item">
-
-<img
-src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=90"
-alt="Food">
-
-</div>
-
-
-<div class="gallery-item">
-
-<img
-src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1000&q=90"
-alt="Dining">
-
-</div>
-
-
-<div class="gallery-item">
-
-<img
-src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=90"
-alt="Restaurant">
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =======================================================
-     REVIEWS
-======================================================= -->
-
-<section class="reviews" id="reviews">
-
-<div class="container">
-
-<div class="section-head reveal">
-
-<small>Guest Experiences</small>
-
-<h2>What Guests Say</h2>
-
-<p>Memories are the best part of every meal.</p>
-
-</div>
-
-
-<div class="review-grid">
-
-
-<div class="review reveal">
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>
-“Great place for spending time with family. The food and
-atmosphere make the experience enjoyable.”
-</p>
-
-<span class="review-name">
-Guest Experience
-</span>
-
-</div>
-
-
-<div class="review reveal">
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>
-“Delicious flavours and a comfortable place to enjoy a
-meal with friends and family.”
-</p>
-
-<span class="review-name">
-Guest Experience
-</span>
-
-</div>
-
-
-<div class="review reveal">
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>
-“A nice dining experience with tasty food and a welcoming
-atmosphere.”
-</p>
-
-<span class="review-name">
-Guest Experience
-</span>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =======================================================
-     CONTACT
-======================================================= -->
-
-<section class="contact" id="contact">
-
-<div class="container">
-
-<div class="section-head reveal">
-
-<small>Visit Us</small>
-
-<h2>Let's Meet at Shariefia</h2>
-
-<p>Your next memorable meal starts here.</p>
-
-</div>
-
-
-<div class="contact-grid reveal">
-
-
-<div class="contact-card">
-
-<h3>Restaurant Details</h3>
-
-
-<div class="contact-row">
-
-<small>Restaurant</small>
-
-<strong>
-Shariefia Family Restaurant
-</strong>
-
-</div>
-
-
-<div class="contact-row">
-
-<small>Location</small>
-
-<strong>
-Anekal, Karnataka, India
-</strong>
-
-</div>
-
-
-<div class="contact-row">
-
-<small>Phone</small>
-
-<strong>
-+91 97421 18589
-</strong>
-
-</div>
-
-
-<div class="contact-row">
-
-<small>Dining</small>
-
-<strong>
-Family Restaurant
-</strong>
-
-</div>
-
-
-<div class="hero-buttons">
-
-<a
-href="tel:+919742118589"
-class="btn btn-gold">
-📞 Call Now
-</a>
-
-
-<a
-href="https://wa.me/919742118589"
-target="_blank"
-class="btn btn-outline">
-💬 WhatsApp
-</a>
-
-</div>
-
-
-</div>
-
-
-<div class="map">
-
-<div>
-
-<h3>
-Shariefia Family Restaurant
-</h3>
-
-<p>
-Anekal • Karnataka
-</p>
-
-<a
-href="https://www.google.com/maps/search/?api=1&query=Shariefia+Family+Restaurant+Anekal+Karnataka"
-target="_blank"
-class="btn btn-gold">
-
-📍 Get Directions
-
-</a>
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =======================================================
-     FOOTER
-======================================================= -->
+</main>
 
 <footer>
-
-<div class="container">
-
-<div class="footer-logo">
-SHARIEFIA
-</div>
-
-<p>
-FAMILY RESTAURANT • ANEKAL • KARNATAKA
-</p>
-
-<p>
-Authentic Flavours. Memorable Moments.
-</p>
-
-<p style="margin-top:20px;">
-© 2026 Shariefia Family Restaurant
-</p>
-
-</div>
-
+  <strong>SHARIEFIA FAMILY RESTAURANT</strong><br>
+  Smart Restaurant Order Management Demo
 </footer>
 
+<div class="toast" id="toast"></div>
 
-<!-- =======================================================
-     FLOATING BUTTONS
-======================================================= -->
-
-<div class="floating">
-
-<a
-href="https://wa.me/919742118589"
-target="_blank"
-class="float-btn float-whatsapp">
-💬
-</a>
-
-<a
-href="tel:+919742118589"
-class="float-btn float-call">
-☎
-</a>
-
-</div>
-
-
-<!-- =======================================================
-     JAVASCRIPT
-======================================================= -->
 
 <script>
 
-/* PAGE LOADER */
+/* =========================
+   MENU DATA
+========================= */
 
-window.addEventListener("load",function(){
+const menu = [
 
-    setTimeout(function(){
-
-        document.getElementById("loader")
-        .classList.add("hide");
-
-    },700);
-
-});
-
-
-/* MOBILE MENU */
-
-function toggleMenu(){
-
-    document
-    .getElementById("navLinks")
-    .classList
-    .toggle("active");
-
-}
-
-
-/* CLOSE MOBILE MENU AFTER CLICK */
-
-document.querySelectorAll(".nav-links a").forEach(function(link){
-
-    link.addEventListener("click",function(){
-
-        document
-        .getElementById("navLinks")
-        .classList
-        .remove("active");
-
-    });
-
-});
-
-
-/* SCROLL REVEAL */
-
-const reveals=document.querySelectorAll(".reveal");
-
-const observer=new IntersectionObserver(
-
-function(entries){
-
-    entries.forEach(function(entry){
-
-        if(entry.isIntersecting){
-
-            entry.target.classList.add("show");
-
-            observer.unobserve(entry.target);
-
-        }
-
-    });
-
-},
 {
-    threshold:.12
+ name:"Chicken Biryani",
+ category:"Biryani",
+ price:180,
+ image:"https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=700&q=85",
+ desc:"Aromatic basmati rice with tender chicken."
+},
+
+{
+ name:"Mutton Biryani",
+ category:"Biryani",
+ price:240,
+ image:"https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=700&q=85",
+ desc:"Rich and flavorful mutton biryani."
+},
+
+{
+ name:"Veg Biryani",
+ category:"Biryani",
+ price:140,
+ image:"https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=700&q=85",
+ desc:"Fragrant vegetable biryani."
+},
+
+{
+ name:"Chicken Kabab",
+ category:"Starters",
+ price:160,
+ image:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=700&q=85",
+ desc:"Juicy grilled chicken kabab."
+},
+
+{
+ name:"Chicken 65",
+ category:"Starters",
+ price:150,
+ image:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=85",
+ desc:"Crispy spicy chicken starter."
+},
+
+{
+ name:"Paneer Tikka",
+ category:"Starters",
+ price:140,
+ image:"https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=700&q=85",
+ desc:"Char-grilled paneer with spices."
+},
+
+{
+ name:"Butter Chicken",
+ category:"Main Course",
+ price:220,
+ image:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=700&q=85",
+ desc:"Creamy North Indian chicken curry."
+},
+
+{
+ name:"Chicken Curry",
+ category:"Main Course",
+ price:190,
+ image:"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=700&q=85",
+ desc:"Traditional aromatic chicken curry."
+},
+
+{
+ name:"Paneer Butter Masala",
+ category:"Main Course",
+ price:180,
+ image:"https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=700&q=85",
+ desc:"Paneer cooked in rich tomato gravy."
+},
+
+{
+ name:"Butter Naan",
+ category:"Breads",
+ price:45,
+ image:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=85",
+ desc:"Soft naan finished with butter."
+},
+
+{
+ name:"Garlic Naan",
+ category:"Breads",
+ price:55,
+ image:"https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=700&q=85",
+ desc:"Naan with garlic and herbs."
+},
+
+{
+ name:"Plain Rice",
+ category:"Rice",
+ price:80,
+ image:"https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=700&q=85",
+ desc:"Steamed fluffy rice."
+},
+
+{
+ name:"Fresh Lime Soda",
+ category:"Drinks",
+ price:60,
+ image:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=85",
+ desc:"Refreshing lime soda."
+},
+
+{
+ name:"Fresh Juice",
+ category:"Drinks",
+ price:80,
+ image:"https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=700&q=85",
+ desc:"Fresh seasonal fruit juice."
+},
+
+{
+ name:"Cold Coffee",
+ category:"Drinks",
+ price:90,
+ image:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=700&q=85",
+ desc:"Chilled creamy cold coffee."
 }
 
-);
+];
 
-reveals.forEach(function(element){
 
-    observer.observe(element);
+/* =========================
+   VARIABLES
+========================= */
+
+let selectedTable = null;
+let selectedCategory = "All";
+let cart = [];
+
+const tables = [
+  "Table 1","Table 2","Table 3","Table 4",
+  "Table 5","Table 6","Table 7","Table 8",
+  "Table 9","Table 10","Table 11","Table 12"
+];
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+window.addEventListener("load",()=>{
+
+  setTimeout(()=>{
+    document.getElementById("loader").classList.add("hidden");
+  },900);
+
+  renderTables();
+  renderCategories();
+  renderMenu();
+  renderKitchen();
 
 });
 
 
-/* COUNTER ANIMATION */
+/* =========================
+   TABLES
+========================= */
 
-const counters=document.querySelectorAll(".counter-number");
+function renderTables(){
 
-let counterStarted=false;
+  const box=document.getElementById("tableGrid");
 
-function startCounters(){
+  box.innerHTML=tables.map((table,index)=>`
 
-    if(counterStarted) return;
+    <button
+      class="table ${selectedTable===table?"active":""}"
+      onclick="selectTable('${table}')">
 
-    const section=document.querySelector(".counter-section");
+      <div class="table-icon">🪑</div>
 
-    const rect=section.getBoundingClientRect();
+      <strong>${table}</strong>
 
-    if(rect.top < window.innerHeight-100){
+      <small>
+        ${selectedTable===table?"SELECTED":"Available"}
+      </small>
 
-        counterStarted=true;
+    </button>
 
-        counters.forEach(function(counter){
+  `).join("");
+}
 
-            const target=Number(counter.dataset.target);
 
-            let current=0;
+function selectTable(table){
 
-            const increment=Math.max(1,Math.ceil(target/60));
+  selectedTable=table;
 
-            const timer=setInterval(function(){
+  document.getElementById("selectedTable").textContent=table;
 
-                current+=increment;
+  renderTables();
 
-                if(current>=target){
-
-                    current=target;
-
-                    clearInterval(timer);
-
-                }
-
-                counter.textContent=current+"+";
-
-            },25);
-
-        });
-
-    }
+  showToast(table+" selected");
 
 }
 
-window.addEventListener("scroll",startCounters);
 
-startCounters();
+/* =========================
+   CATEGORIES
+========================= */
+
+function renderCategories(){
+
+  const cats=["All",...new Set(menu.map(item=>item.category))];
+
+  document.getElementById("categories").innerHTML=cats.map(cat=>`
+
+    <button
+      class="cat ${selectedCategory===cat?"active":""}"
+      onclick="selectCategory('${cat}')">
+
+      ${cat}
+
+    </button>
+
+  `).join("");
+
+}
+
+
+function selectCategory(cat){
+
+  selectedCategory=cat;
+
+  renderCategories();
+  renderMenu();
+
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+function renderMenu(){
+
+  const box=document.getElementById("menuGrid");
+
+  const items=selectedCategory==="All"
+    ?menu
+    :menu.filter(item=>item.category===selectedCategory);
+
+  box.innerHTML=items.map((item,index)=>`
+
+    <div class="food">
+
+      <div
+        class="food-img"
+        style="background-image:url('${item.image}')">
+      </div>
+
+      <div class="food-body">
+
+        <h3>${item.name}</h3>
+
+        <p>${item.desc}</p>
+
+        <div class="food-bottom">
+
+          <span class="price">
+            ₹${item.price}
+          </span>
+
+          <button
+            class="add-btn"
+            onclick="addItem(${menu.indexOf(item)})">
+
+            + ADD
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+}
+
+
+/* =========================
+   ADD ITEM
+========================= */
+
+function addItem(index){
+
+  const item=menu[index];
+
+  const existing=cart.find(x=>x.name===item.name);
+
+  if(existing){
+
+    existing.qty++;
+
+  }else{
+
+    cart.push({
+      name:item.name,
+      price:item.price,
+      qty:1
+    });
+
+  }
+
+  renderCart();
+
+  showToast(item.name+" added");
+
+}
+
+
+/* =========================
+   CART
+========================= */
+
+function renderCart(){
+
+  const box=document.getElementById("orderItems");
+
+  if(cart.length===0){
+
+    box.innerHTML=`
+      <div class="empty">
+        No items added yet.<br>
+        Select food from the menu above.
+      </div>
+    `;
+
+  }else{
+
+    box.innerHTML=cart.map((item,index)=>`
+
+      <div class="order-item">
+
+        <div class="order-item-info">
+
+          <strong>${item.name}</strong>
+
+          <small>
+            ₹${item.price} × ${item.qty}
+          </small>
+
+        </div>
+
+        <div class="qty">
+
+          <button onclick="changeQty(${index},-1)">
+            −
+          </button>
+
+          <strong>${item.qty}</strong>
+
+          <button onclick="changeQty(${index},1)">
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+  }
+
+  const total=cart.reduce(
+    (sum,item)=>sum+(item.price*item.qty),0
+  );
+
+  document.getElementById("totalAmount").textContent=
+    "₹"+total;
+
+}
+
+
+function changeQty(index,change){
+
+  cart[index].qty+=change;
+
+  if(cart[index].qty<=0){
+
+    cart.splice(index,1);
+
+  }
+
+  renderCart();
+
+}
+
+
+/* =========================
+   SEND ORDER
+========================= */
+
+function sendOrder(){
+
+  if(!selectedTable){
+
+    showToast("Please select a table first");
+    return;
+
+  }
+
+  if(cart.length===0){
+
+    showToast("Please add at least one item");
+    return;
+
+  }
+
+  const notes=document.getElementById("orderNotes").value.trim();
+
+  const total=cart.reduce(
+    (sum,item)=>sum+(item.price*item.qty),0
+  );
+
+  const order={
+
+    id:"ORD-"+Date.now(),
+
+    table:selectedTable,
+
+    items:[...cart],
+
+    notes:notes || "No special requirements",
+
+    total:total,
+
+    status:"New",
+
+    time:new Date().toLocaleTimeString([],{
+      hour:"2-digit",
+      minute:"2-digit"
+    })
+
+  };
+
+
+  let orders=JSON.parse(
+    localStorage.getItem("shariefiaOrders") || "[]"
+  );
+
+  orders.unshift(order);
+
+  localStorage.setItem(
+    "shariefiaOrders",
+    JSON.stringify(orders)
+  );
+
+
+  cart=[];
+
+  document.getElementById("orderNotes").value="";
+
+  renderCart();
+  renderKitchen();
+
+  showToast("✓ Order sent to kitchen");
+
+  setTimeout(()=>{
+    scrollToDashboard();
+  },700);
+
+}
+
+
+/* =========================
+   KITCHEN DASHBOARD
+========================= */
+
+function renderKitchen(){
+
+  const box=document.getElementById("kitchenOrders");
+
+  let orders=JSON.parse(
+    localStorage.getItem("shariefiaOrders") || "[]"
+  );
+
+  if(orders.length===0){
+
+    box.innerHTML=`
+      <div class="empty">
+        🍽️ No orders yet.<br>
+        Orders sent by the waiter will appear here.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML=orders.map(order=>{
+
+    const statusClass=
+      order.status.toLowerCase();
+
+    return`
+
+      <div class="kitchen-card">
+
+        <div class="status-line status-${statusClass}"></div>
+
+        <div class="kitchen-top">
+
+          <div>
+            <h3>🪑 ${order.table}</h3>
+
+            <div class="kitchen-time">
+              ${order.time} • ${order.id}
+            </div>
+          </div>
+
+          <span class="badge ${statusClass}">
+            ${order.status}
+          </span>
+
+        </div>
+
+
+        <div class="kitchen-items">
+
+          ${order.items.map(item=>`
+
+            <div class="kitchen-item">
+
+              <span>
+                ${item.name}
+              </span>
+
+              <span>
+                ×${item.qty}
+              </span>
+
+            </div>
+
+          `).join("")}
+
+        </div>
+
+
+        <div class="kitchen-note">
+          📝 ${order.notes}
+        </div>
+
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          margin-bottom:10px;
+          font-size:12px;
+        ">
+
+          <strong>Total</strong>
+
+          <strong style="color:#f4d58b">
+            ₹${order.total}
+          </strong>
+
+        </div>
+
+
+        <div class="status-actions">
+
+          <button onclick="changeStatus('${order.id}','Preparing')">
+            🔥 Preparing
+          </button>
+
+          <button onclick="changeStatus('${order.id}','Ready')">
+            ✓ Ready
+          </button>
+
+          <button onclick="changeStatus('${order.id}','Served')">
+            🍽️ Served
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+}
+
+
+/* =========================
+   CHANGE STATUS
+========================= */
+
+function changeStatus(id,status){
+
+  let orders=JSON.parse(
+    localStorage.getItem("shariefiaOrders") || "[]"
+  );
+
+  const order=orders.find(x=>x.id===id);
+
+  if(order){
+
+    order.status=status;
+
+  }
+
+  localStorage.setItem(
+    "shariefiaOrders",
+    JSON.stringify(orders)
+  );
+
+  renderKitchen();
+
+  showToast("Order marked "+status);
+
+}
+
+
+/* =========================
+   CLEAR ORDERS
+========================= */
+
+function clearOrders(){
+
+  if(!confirm("Clear all demo orders?")) return;
+
+  localStorage.removeItem("shariefiaOrders");
+
+  renderKitchen();
+
+  showToast("All demo orders cleared");
+
+}
+
+
+/* =========================
+   SCROLL DASHBOARD
+========================= */
+
+function scrollToDashboard(){
+
+  document.getElementById("dashboard")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+  const toast=document.getElementById("toast");
+
+  toast.textContent=message;
+
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+    toast.classList.remove("show");
+  },2200);
+
+}
 
 </script>
 
 </body>
-    </html>
+</html>
