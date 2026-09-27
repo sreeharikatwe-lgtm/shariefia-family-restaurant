@@ -9,9 +9,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
 
 *{
     margin:0;
@@ -24,9 +28,10 @@ html{
 }
 
 body{
-    font-family:Poppins,sans-serif;
-    background:#080808;
-    color:#fff;
+    background:#100b09;
+    color:#f7efe4;
+    font-family:"DM Sans",sans-serif;
+    overflow-x:hidden;
 }
 
 a{
@@ -39,26 +44,78 @@ img{
     width:100%;
 }
 
+button{
+    font-family:inherit;
+}
+
 .container{
     width:min(1150px,92%);
     margin:auto;
 }
 
-/* ================= NAVBAR ================= */
+.gold{
+    color:#d7ad61;
+}
+
+/* =========================================================
+   PAGE LOADER
+========================================================= */
+
+.loader{
+    position:fixed;
+    inset:0;
+    background:#100b09;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    transition:opacity .7s,visibility .7s;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-logo{
+    font-family:Cinzel,serif;
+    font-size:32px;
+    color:#d7ad61;
+    letter-spacing:5px;
+}
+
+.loader-line{
+    width:100px;
+    height:2px;
+    background:#d7ad61;
+    margin-top:18px;
+    animation:loadline 1.4s infinite;
+}
+
+@keyframes loadline{
+    0%{transform:scaleX(0);transform-origin:left}
+    50%{transform:scaleX(1);transform-origin:left}
+    100%{transform:scaleX(0);transform-origin:right}
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 .navbar{
     position:fixed;
     top:0;
     left:0;
     width:100%;
-    z-index:999;
-    background:rgba(8,8,8,.86);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid rgba(214,170,73,.25);
+    z-index:1000;
+    background:rgba(16,11,9,.82);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(215,173,97,.15);
 }
 
 .nav-inner{
-    height:72px;
+    height:74px;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -66,432 +123,571 @@ img{
 
 .logo{
     font-family:Cinzel,serif;
-    font-weight:800;
     font-size:20px;
-    letter-spacing:2px;
-    color:#d8ae50;
+    font-weight:700;
+    letter-spacing:3px;
+    color:#d7ad61;
 }
 
-.logo span{
+.logo small{
     display:block;
-    font-family:Poppins,sans-serif;
-    color:#ddd;
-    font-size:7px;
-    letter-spacing:4px;
     text-align:center;
+    font-family:"DM Sans",sans-serif;
+    font-size:7px;
+    color:#ddd0c1;
+    letter-spacing:4px;
     margin-top:2px;
 }
 
 .nav-links{
     display:flex;
-    gap:24px;
-    font-size:12px;
+    gap:25px;
 }
 
 .nav-links a{
-    color:#ddd;
+    font-size:12px;
+    color:#ded5cc;
+    position:relative;
+    transition:.3s;
+}
+
+.nav-links a:after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-8px;
+    width:0;
+    height:1px;
+    background:#d7ad61;
     transition:.3s;
 }
 
 .nav-links a:hover{
-    color:#d8ae50;
+    color:#d7ad61;
 }
 
-/* ================= HERO ================= */
+.nav-links a:hover:after{
+    width:100%;
+}
+
+.menu-btn{
+    display:none;
+    background:none;
+    border:0;
+    color:#d7ad61;
+    font-size:27px;
+    cursor:pointer;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
     min-height:100vh;
+    position:relative;
     display:flex;
     align-items:center;
-    position:relative;
+    overflow:hidden;
+
     background:
-    linear-gradient(90deg,
-        rgba(0,0,0,.94),
-        rgba(20,5,4,.72),
-        rgba(0,0,0,.28)),
-    url("https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=1900&q=90");
+    linear-gradient(
+        90deg,
+        rgba(16,11,9,.97),
+        rgba(38,15,10,.75),
+        rgba(16,11,9,.25)
+    ),
+    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=90");
 
     background-size:cover;
     background-position:center;
 }
 
-.hero:after{
+.hero:before{
     content:"";
     position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    height:160px;
-    background:linear-gradient(transparent,#080808);
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    right:-200px;
+    top:10%;
+    background:rgba(215,173,97,.08);
+    filter:blur(10px);
 }
 
 .hero-content{
     position:relative;
     z-index:2;
-    max-width:720px;
-    padding-top:70px;
+    max-width:730px;
+    padding-top:75px;
 }
 
-.hero-kicker{
-    color:#d8ae50;
-    font-size:11px;
+.hero-tag{
+    color:#d7ad61;
     letter-spacing:5px;
+    font-size:10px;
     text-transform:uppercase;
-    margin-bottom:18px;
+    animation:fadeUp 1s .2s both;
 }
 
 .hero h1{
     font-family:Cinzel,serif;
-    font-size:clamp(45px,9vw,84px);
-    line-height:1.02;
-    letter-spacing:1px;
+    font-size:clamp(45px,9vw,88px);
+    line-height:1;
+    margin-top:18px;
+    animation:fadeUp 1s .35s both;
 }
 
 .hero h1 span{
-    color:#d8ae50;
+    color:#d7ad61;
 }
 
-.hero-text{
-    max-width:600px;
-    color:#ddd;
+.hero-description{
+    max-width:590px;
+    color:#d6cdc3;
+    line-height:1.9;
     font-size:15px;
-    line-height:1.8;
-    margin-top:22px;
+    margin-top:25px;
+    animation:fadeUp 1s .5s both;
 }
 
 .hero-buttons{
     display:flex;
     flex-wrap:wrap;
     gap:12px;
-    margin-top:30px;
+    margin-top:32px;
+    animation:fadeUp 1s .65s both;
 }
 
 .btn{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    padding:14px 23px;
-    border-radius:3px;
+    min-height:48px;
+    padding:0 22px;
     font-size:12px;
-    font-weight:600;
-    transition:.3s;
+    font-weight:700;
+    border-radius:3px;
+    transition:.35s;
 }
 
-.btn-primary{
-    background:#d8ae50;
-    color:#0b0906;
+.btn-gold{
+    background:#d7ad61;
+    color:#160e0a;
 }
 
-.btn-primary:hover{
-    transform:translateY(-3px);
-    box-shadow:0 12px 30px rgba(216,174,80,.25);
+.btn-gold:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 35px rgba(215,173,97,.22);
 }
 
-.btn-secondary{
-    border:1px solid #d8ae50;
-    color:#d8ae50;
+.btn-outline{
+    border:1px solid #d7ad61;
+    color:#d7ad61;
 }
 
-.btn-secondary:hover{
-    background:#d8ae50;
-    color:#111;
+.btn-outline:hover{
+    background:#d7ad61;
+    color:#160e0a;
 }
 
-/* ================= GENERAL ================= */
+.hero-scroll{
+    position:absolute;
+    bottom:35px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#aaa;
+    font-size:9px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translate(-50%,0)}
+    50%{transform:translate(-50%,8px)}
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
 
 section{
-    padding:90px 0;
+    padding:100px 0;
 }
 
-.section-heading{
+.section-head{
     text-align:center;
-    margin-bottom:45px;
+    margin-bottom:50px;
 }
 
-.section-heading small{
-    color:#d8ae50;
-    font-size:9px;
+.section-head small{
+    color:#d7ad61;
     letter-spacing:5px;
     text-transform:uppercase;
+    font-size:9px;
 }
 
-.section-heading h2{
+.section-head h2{
     font-family:Cinzel,serif;
-    font-size:clamp(29px,6vw,46px);
+    font-size:clamp(30px,6vw,48px);
     margin-top:9px;
 }
 
-.section-heading p{
-    color:#8f8f8f;
+.section-head p{
+    color:#8e8580;
     font-size:13px;
-    margin-top:9px;
+    margin-top:10px;
 }
 
-/* ================= INTRO ================= */
+/* =========================================================
+   ABOUT
+========================================================= */
 
-.intro{
-    background:#080808;
+.about{
+    background:#100b09;
 }
 
-.intro-grid{
+.about-grid{
     display:grid;
-    grid-template-columns:1.05fr .95fr;
-    gap:50px;
+    grid-template-columns:1fr 1fr;
+    gap:55px;
     align-items:center;
 }
 
-.intro-image{
+.about-image{
+    height:480px;
     position:relative;
-    height:450px;
     overflow:hidden;
 }
 
-.intro-image img{
+.about-image img{
     height:100%;
     object-fit:cover;
+    transition:transform 1s;
 }
 
-.intro-image:after{
+.about-image:hover img{
+    transform:scale(1.06);
+}
+
+.about-image:after{
     content:"";
     position:absolute;
-    inset:12px;
-    border:1px solid rgba(216,174,80,.5);
+    inset:14px;
+    border:1px solid rgba(215,173,97,.6);
     pointer-events:none;
 }
 
-.intro-text h3{
+.about-content h3{
     font-family:Cinzel,serif;
-    color:#d8ae50;
+    color:#d7ad61;
     font-size:31px;
-    margin-bottom:17px;
+    margin-bottom:20px;
 }
 
-.intro-text p{
-    color:#b9b9b9;
+.about-content p{
+    color:#b7aea7;
     font-size:14px;
-    line-height:1.9;
-    margin-bottom:16px;
-}
-
-/* ================= STATS ================= */
-
-.stats{
-    margin-top:28px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
-.stat{
-    padding:20px 12px;
-    text-align:center;
-    background:#12100e;
-    border:1px solid rgba(216,174,80,.18);
-}
-
-.stat strong{
-    display:block;
-    font-family:Cinzel,serif;
-    color:#d8ae50;
-    font-size:21px;
-}
-
-.stat span{
-    display:block;
-    color:#888;
-    font-size:9px;
-    margin-top:4px;
-}
-
-/* ================= SERVICES ================= */
-
-.services{
-    background:#0e0908;
-}
-
-.service-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:17px;
-}
-
-.service-card{
-    background:#15100f;
-    border:1px solid rgba(216,174,80,.17);
-    padding:28px 20px;
-    text-align:center;
-    transition:.3s;
-}
-
-.service-card:hover{
-    transform:translateY(-7px);
-    border-color:#d8ae50;
-}
-
-.service-icon{
-    font-size:34px;
+    line-height:1.95;
     margin-bottom:15px;
 }
 
-.service-card h3{
+.signature{
+    margin-top:28px;
+    color:#d7ad61;
     font-family:Cinzel,serif;
-    font-size:17px;
-    color:#eee;
+    font-size:20px;
 }
 
-.service-card p{
-    color:#888;
-    font-size:11px;
-    line-height:1.7;
-    margin-top:8px;
+/* =========================================================
+   COUNTERS
+========================================================= */
+
+.counter-section{
+    background:#180f0c;
+    border-top:1px solid rgba(215,173,97,.1);
+    border-bottom:1px solid rgba(215,173,97,.1);
 }
 
-/* ================= MENU ================= */
-
-.menu{
-    background:#080808;
+.counter-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
 }
 
-.menu-grid{
+.counter{
+    text-align:center;
+    padding:20px;
+}
+
+.counter-number{
+    font-family:Cinzel,serif;
+    font-size:37px;
+    color:#d7ad61;
+}
+
+.counter-label{
+    color:#877d75;
+    font-size:10px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-top:5px;
+}
+
+/* =========================================================
+   EXPERIENCE CARDS
+========================================================= */
+
+.experience{
+    background:#100b09;
+}
+
+.experience-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:20px;
 }
 
+.experience-card{
+    padding:35px 25px;
+    background:#18110e;
+    border:1px solid rgba(215,173,97,.14);
+    text-align:center;
+    transition:.4s;
+}
+
+.experience-card:hover{
+    transform:translateY(-10px);
+    border-color:#d7ad61;
+}
+
+.experience-icon{
+    font-size:38px;
+    margin-bottom:20px;
+}
+
+.experience-card h3{
+    font-family:Cinzel,serif;
+    color:#f2e7d9;
+    font-size:19px;
+}
+
+.experience-card p{
+    color:#817873;
+    font-size:11px;
+    line-height:1.8;
+    margin-top:9px;
+}
+
+/* =========================================================
+   MENU
+========================================================= */
+
+.menu{
+    background:#0d0907;
+}
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
 .menu-card{
-    background:#12100f;
-    border:1px solid rgba(216,174,80,.15);
+    background:#17100d;
+    border:1px solid rgba(215,173,97,.13);
     overflow:hidden;
-    transition:.3s;
+    transition:.4s;
 }
 
 .menu-card:hover{
-    transform:translateY(-6px);
-    border-color:#d8ae50;
+    transform:translateY(-8px);
+    border-color:#d7ad61;
+    box-shadow:0 20px 50px rgba(0,0,0,.3);
 }
 
-.menu-card img{
-    height:230px;
+.menu-image{
+    height:240px;
+    overflow:hidden;
+}
+
+.menu-image img{
+    height:100%;
     object-fit:cover;
+    transition:.6s;
+}
+
+.menu-card:hover .menu-image img{
+    transform:scale(1.08);
 }
 
 .menu-info{
-    padding:20px;
+    padding:22px;
 }
 
-.menu-label{
-    color:#d8ae50;
-    font-size:9px;
+.menu-category{
+    color:#d7ad61;
+    font-size:8px;
     letter-spacing:3px;
 }
 
 .menu-info h3{
     font-family:Cinzel,serif;
     font-size:20px;
-    margin-top:6px;
+    margin-top:7px;
 }
 
 .menu-info p{
-    color:#888;
+    color:#817873;
     font-size:11px;
     line-height:1.7;
-    margin-top:6px;
+    margin-top:7px;
 }
 
-/* ================= FEATURE ================= */
+/* =========================================================
+   CTA
+========================================================= */
 
-.feature{
+.cta{
+    min-height:470px;
+    display:flex;
+    align-items:center;
+    text-align:center;
+
     background:
-    linear-gradient(rgba(8,4,4,.85),rgba(8,4,4,.94)),
-    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1900&q=85");
+    linear-gradient(
+        rgba(16,8,5,.78),
+        rgba(16,8,5,.91)
+    ),
+    url("https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1900&q=90");
 
     background-size:cover;
     background-position:center;
     background-attachment:fixed;
 }
 
-.feature-content{
-    max-width:780px;
+.cta-content{
+    max-width:760px;
     margin:auto;
-    text-align:center;
 }
 
-.feature-content h2{
+.cta-content small{
+    color:#d7ad61;
+    letter-spacing:5px;
+}
+
+.cta-content h2{
     font-family:Cinzel,serif;
-    color:#d8ae50;
-    font-size:clamp(30px,6vw,48px);
+    font-size:clamp(32px,7vw,55px);
+    margin-top:13px;
 }
 
-.feature-content p{
-    color:#ddd;
-    line-height:1.9;
+.cta-content p{
+    color:#d2c8bf;
+    line-height:1.8;
     font-size:14px;
-    margin:18px 0 28px;
+    margin:18px auto 30px;
 }
 
-/* ================= GALLERY ================= */
+/* =========================================================
+   GALLERY
+========================================================= */
 
 .gallery{
-    background:#0b0b0b;
+    background:#100b09;
 }
 
 .gallery-grid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
+    grid-template-columns:1.2fr .8fr .8fr;
+    grid-auto-rows:220px;
+    gap:10px;
 }
 
-.gallery-grid img{
-    height:250px;
+.gallery-item{
+    overflow:hidden;
+    position:relative;
+}
+
+.gallery-item:first-child{
+    grid-row:span 2;
+}
+
+.gallery-item img{
+    height:100%;
     object-fit:cover;
-    transition:.35s;
+    transition:.6s;
 }
 
-.gallery-grid img:hover{
-    transform:scale(1.025);
+.gallery-item:hover img{
+    transform:scale(1.08);
 }
 
-/* ================= TESTIMONIALS ================= */
-
-.testimonials{
-    background:#0f0908;
+.gallery-item:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent,rgba(0,0,0,.3));
 }
 
-.testimonial-grid{
+/* =========================================================
+   REVIEWS
+========================================================= */
+
+.reviews{
+    background:#180f0c;
+}
+
+.review-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:18px;
+    gap:20px;
 }
 
 .review{
-    background:#15100f;
-    border:1px solid rgba(216,174,80,.16);
-    padding:25px;
+    background:#120c0a;
+    padding:28px;
+    border:1px solid rgba(215,173,97,.13);
 }
 
 .stars{
-    color:#d8ae50;
+    color:#d7ad61;
     letter-spacing:3px;
-    font-size:12px;
 }
 
 .review p{
-    color:#b7b7b7;
+    color:#b6aaa1;
     font-size:12px;
-    line-height:1.8;
+    line-height:1.9;
     margin-top:15px;
 }
 
-.review strong{
+.review-name{
     display:block;
-    margin-top:17px;
+    margin-top:20px;
+    font-weight:600;
+    color:#eee;
     font-size:12px;
 }
 
-/* ================= CONTACT ================= */
+/* =========================================================
+   CONTACT
+========================================================= */
 
 .contact{
-    background:#080808;
+    background:#0d0907;
 }
 
 .contact-grid{
@@ -501,81 +697,77 @@ section{
 }
 
 .contact-card{
-    background:#12100f;
-    border:1px solid rgba(216,174,80,.18);
-    padding:30px;
+    background:#17100d;
+    padding:35px;
+    border:1px solid rgba(215,173,97,.14);
 }
 
 .contact-card h3{
     font-family:Cinzel,serif;
-    color:#d8ae50;
-    font-size:25px;
-    margin-bottom:22px;
+    color:#d7ad61;
+    font-size:27px;
+    margin-bottom:25px;
 }
 
 .contact-row{
-    margin:19px 0;
+    margin:20px 0;
 }
 
 .contact-row small{
-    color:#777;
     display:block;
-    font-size:9px;
-    letter-spacing:2px;
+    color:#756b65;
+    font-size:8px;
+    letter-spacing:3px;
     text-transform:uppercase;
 }
 
 .contact-row strong{
     display:block;
-    font-size:14px;
     margin-top:5px;
+    font-size:14px;
 }
 
-.contact-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:25px;
-}
-
-.map-box{
-    min-height:360px;
+.map{
+    min-height:390px;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
 
     background:
-    linear-gradient(rgba(25,4,3,.5),rgba(0,0,0,.75)),
-    url("https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1100&q=85");
+    linear-gradient(rgba(30,10,5,.52),rgba(0,0,0,.78)),
+    url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=90");
 
     background-size:cover;
     background-position:center;
 }
 
-.map-box h3{
+.map h3{
     font-family:Cinzel,serif;
-    font-size:27px;
+    font-size:28px;
 }
 
-.map-box p{
+.map p{
     color:#ddd;
     margin:8px 0 22px;
 }
 
-/* ================= FOOTER ================= */
+/* =========================================================
+   FOOTER
+========================================================= */
 
 footer{
-    padding:40px 0;
+    padding:45px 0;
     text-align:center;
-    background:#030303;
-    border-top:1px solid rgba(216,174,80,.2);
+    background:#050403;
+    border-top:1px solid rgba(215,173,97,.15);
 }
 
-footer h3{
+.footer-logo{
     font-family:Cinzel,serif;
-    color:#d8ae50;
-    letter-spacing:3px;
+    color:#d7ad61;
+    letter-spacing:4px;
+    font-size:22px;
 }
 
 footer p{
@@ -584,101 +776,173 @@ footer p{
     margin-top:8px;
 }
 
-/* ================= FLOATING BUTTON ================= */
+/* =========================================================
+   FLOATING BUTTONS
+========================================================= */
 
-.floating-call{
+.floating{
     position:fixed;
     right:18px;
     bottom:18px;
-    width:56px;
-    height:56px;
+    z-index:900;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.float-btn{
+    width:52px;
+    height:52px;
     border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#d8ae50;
-    color:#111;
-    font-size:23px;
-    z-index:100;
-    box-shadow:0 8px 25px rgba(0,0,0,.5);
+    font-size:21px;
+    box-shadow:0 8px 25px rgba(0,0,0,.4);
 }
 
-/* ================= MOBILE ================= */
+.float-call{
+    background:#d7ad61;
+    color:#111;
+}
+
+.float-whatsapp{
+    background:#25d366;
+    color:white;
+}
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(40px);
+    transition:opacity .8s,transform .8s;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media(max-width:850px){
 
     .nav-links{
+        position:absolute;
+        top:74px;
+        left:0;
+        width:100%;
+        background:#100b09;
+        border-bottom:1px solid rgba(215,173,97,.15);
         display:none;
+        flex-direction:column;
+        padding:20px 6%;
+        gap:20px;
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .menu-btn{
+        display:block;
     }
 
     .hero{
-        min-height:760px;
+        min-height:780px;
         background-position:65% center;
     }
 
     .hero h1{
-        font-size:49px;
+        font-size:50px;
     }
 
-    .intro-grid,
+    .about-grid,
     .contact-grid{
         grid-template-columns:1fr;
     }
 
-    .intro-image{
-        height:340px;
+    .about-image{
+        height:350px;
     }
 
-    .stats{
+    .counter-grid{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .service-grid{
-        grid-template-columns:repeat(2,1fr);
+    .experience-grid{
+        grid-template-columns:1fr;
     }
 
     .menu-grid{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .gallery-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .testimonial-grid{
+    .review-grid{
         grid-template-columns:1fr;
     }
+
 }
 
-@media(max-width:500px){
+@media(max-width:520px){
 
     section{
-        padding:70px 0;
+        padding:75px 0;
     }
 
     .hero h1{
         font-size:43px;
     }
 
-    .service-grid,
+    .hero-description{
+        font-size:13px;
+    }
+
     .menu-grid{
         grid-template-columns:1fr;
     }
 
-    .gallery-grid{
-        grid-template-columns:1fr;
+    .menu-image{
+        height:230px;
     }
 
-    .gallery-grid img{
-        height:250px;
+    .gallery-grid{
+        grid-template-columns:1fr 1fr;
+        grid-auto-rows:170px;
+    }
+
+    .gallery-item:first-child{
+        grid-column:span 2;
+        grid-row:span 1;
     }
 
     .stats{
         grid-template-columns:1fr 1fr;
     }
 
-    .intro-text h3{
-        font-size:26px;
+    .contact-card{
+        padding:25px;
+    }
+
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *:before,
+    *:after{
+        animation:none!important;
+        transition:none!important;
+        scroll-behavior:auto!important;
     }
 
 }
@@ -688,38 +952,64 @@ footer p{
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
+<!-- =======================================================
+     LOADER
+======================================================= -->
+
+<div class="loader" id="loader">
+
+<div class="loader-logo">
+SHARIEFIA
+</div>
+
+<div class="loader-line"></div>
+
+</div>
+
+
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
 
 <nav class="navbar">
 
 <div class="container nav-inner">
 
-<div class="logo">
+<a href="#home" class="logo">
 SHARIEFIA
-<span>FAMILY RESTAURANT</span>
-</div>
+<small>FAMILY RESTAURANT</small>
+</a>
 
-<div class="nav-links">
+<div class="nav-links" id="navLinks">
+
 <a href="#home">Home</a>
 <a href="#about">About</a>
-<a href="#services">Services</a>
+<a href="#experience">Experience</a>
 <a href="#menu">Menu</a>
 <a href="#gallery">Gallery</a>
+<a href="#reviews">Reviews</a>
 <a href="#contact">Contact</a>
+
 </div>
+
+<button class="menu-btn" onclick="toggleMenu()">
+☰
+</button>
 
 </div>
 
 </nav>
 
 
-<!-- ================= HERO ================= -->
+<!-- =======================================================
+     HOME
+======================================================= -->
 
 <header class="hero" id="home">
 
 <div class="container hero-content">
 
-<div class="hero-kicker">
+<div class="hero-tag">
 Anekal • Karnataka
 </div>
 
@@ -728,100 +1018,85 @@ Authentic<br>
 <span>Flavours.</span>
 </h1>
 
-<p class="hero-text">
-Welcome to Shariefia Family Restaurant — bringing together
-delicious food, warm hospitality and memorable moments
-for families and friends.
+<p class="hero-description">
+Welcome to Shariefia Family Restaurant — where delicious
+food, warm hospitality and memorable family moments come
+together around one table.
 </p>
 
 <div class="hero-buttons">
 
-<a href="#menu" class="btn btn-primary">
-🍽 View Menu
+<a href="#menu" class="btn btn-gold">
+🍽 Explore Menu
 </a>
 
-<a href="tel:+919742118589" class="btn btn-secondary">
-📞 Call Now
-</a>
-
-<a
-href="https://www.google.com/maps/search/?api=1&query=Shariefia+Family+Restaurant+Anekal+Karnataka"
-target="_blank"
-class="btn btn-secondary">
-📍 Directions
+<a href="tel:+919742118589" class="btn btn-outline">
+📞 Call Restaurant
 </a>
 
 </div>
 
+</div>
+
+<div class="hero-scroll">
+Scroll to discover ↓
 </div>
 
 </header>
 
 
-<!-- ================= ABOUT ================= -->
+<!-- =======================================================
+     ABOUT
+======================================================= -->
 
-<section class="intro" id="about">
+<section class="about" id="about">
 
 <div class="container">
 
-<div class="section-heading">
+<div class="section-head reveal">
 
-<small>Welcome to Shariefia</small>
+<small>Our Story</small>
 
-<h2>A Place Made for Good Food</h2>
+<h2>A Table Full of Memories</h2>
 
-<p>Good food tastes better when shared.</p>
+<p>Good food brings people together.</p>
 
 </div>
 
-<div class="intro-grid">
 
-<div class="intro-image">
+<div class="about-grid reveal">
+
+<div class="about-image">
 
 <img
-src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1100&q=85"
-alt="Restaurant dining">
+src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=90"
+alt="Restaurant">
 
 </div>
 
-<div class="intro-text">
 
-<h3>Where Every Table Tells a Story</h3>
+<div class="about-content">
+
+<h3>Welcome to Shariefia</h3>
 
 <p>
 Shariefia Family Restaurant is a welcoming destination
-for families, friends and food lovers looking for a
-satisfying dining experience in Anekal.
+for families, friends and food lovers in Anekal.
 </p>
 
 <p>
-From aromatic biryani and flavourful starters to hearty
-family meals, our focus is simple — delicious food and
-memorable moments.
+From aromatic biryani and delicious starters to satisfying
+family meals, every visit is about good food, good company
+and memorable moments.
 </p>
 
-<div class="stats">
+<p>
+Our goal is simple — serve food that makes people want to
+come back and share another meal together.
+</p>
 
-<div class="stat">
-<strong>🍛</strong>
-<span>Biryani</span>
-</div>
-
-<div class="stat">
-<strong>🔥</strong>
-<span>Fresh Food</span>
-</div>
-
-<div class="stat">
-<strong>👨‍👩‍👧</strong>
-<span>Family Dining</span>
-</div>
-
-<div class="stat">
-<strong>⭐</strong>
-<span>Quality</span>
-</div>
-
+<div class="signature">
+Shariefia Family Restaurant
 </div>
 
 </div>
@@ -833,68 +1108,130 @@ memorable moments.
 </section>
 
 
-<!-- ================= SERVICES ================= -->
+<!-- =======================================================
+     COUNTERS
+======================================================= -->
 
-<section class="services" id="services">
+<section class="counter-section">
 
 <div class="container">
 
-<div class="section-heading">
+<div class="counter-grid reveal">
 
-<small>What We Offer</small>
+<div class="counter">
 
-<h2>Dining Made Simple</h2>
+<div class="counter-number" data-target="100">0</div>
 
-<p>Everything you need for a satisfying restaurant experience.</p>
+<div class="counter-label">
+Happy Moments
+</div>
 
 </div>
 
-<div class="service-grid">
 
-<div class="service-card">
+<div class="counter">
 
-<div class="service-icon">🍽️</div>
+<div class="counter-number" data-target="25">0</div>
 
-<h3>Dine-In</h3>
+<div class="counter-label">
+Food Choices
+</div>
+
+</div>
+
+
+<div class="counter">
+
+<div class="counter-number" data-target="4">0</div>
+
+<div class="counter-label">
+Dining Services
+</div>
+
+</div>
+
+
+<div class="counter">
+
+<div class="counter-number" data-target="1">0</div>
+
+<div class="counter-label">
+Family Destination
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     EXPERIENCE
+======================================================= -->
+
+<section class="experience" id="experience">
+
+<div class="container">
+
+<div class="section-head reveal">
+
+<small>Why Shariefia</small>
+
+<h2>More Than Just a Meal</h2>
+
+<p>A complete dining experience for every occasion.</p>
+
+</div>
+
+
+<div class="experience-grid">
+
+<div class="experience-card reveal">
+
+<div class="experience-icon">
+🍛
+</div>
+
+<h3>Rich Flavours</h3>
 
 <p>
-Enjoy your favourite dishes in a comfortable family atmosphere.
+Enjoy aromatic dishes and delicious flavours prepared
+to make every meal special.
 </p>
 
 </div>
 
-<div class="service-card">
 
-<div class="service-icon">🥡</div>
+<div class="experience-card reveal">
 
-<h3>Takeaway</h3>
-
-<p>
-Take your favourite Shariefia flavours with you.
-</p>
-
+<div class="experience-icon">
+👨‍👩‍👧
 </div>
-
-<div class="service-card">
-
-<div class="service-icon">👨‍👩‍👧</div>
 
 <h3>Family Dining</h3>
 
 <p>
-A welcoming place for families and friends to gather.
+A comfortable place to spend quality time with the people
+who matter most.
 </p>
 
 </div>
 
-<div class="service-card">
 
-<div class="service-icon">🎉</div>
+<div class="experience-card reveal">
 
-<h3>Group Dining</h3>
+<div class="experience-icon">
+🎉
+</div>
+
+<h3>Special Moments</h3>
 
 <p>
-Perfect for gatherings, celebrations and special occasions.
+Perfect for gatherings, celebrations and memorable
+occasions with family and friends.
 </p>
 
 </div>
@@ -906,38 +1243,48 @@ Perfect for gatherings, celebrations and special occasions.
 </section>
 
 
-<!-- ================= MENU ================= -->
+<!-- =======================================================
+     MENU
+======================================================= -->
 
 <section class="menu" id="menu">
 
 <div class="container">
 
-<div class="section-heading">
+<div class="section-head reveal">
 
 <small>From Our Kitchen</small>
 
-<h2>Our Specialities</h2>
+<h2>Signature Selection</h2>
 
-<p>A selection of flavours to make your visit memorable.</p>
+<p>Discover some of the flavours you can enjoy at Shariefia.</p>
 
 </div>
 
+
 <div class="menu-grid">
 
-<div class="menu-card">
+
+<div class="menu-card reveal">
+
+<div class="menu-image">
 
 <img
-src="https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=1000&q=85"
+src="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=1200&q=90"
 alt="Biryani">
+
+</div>
 
 <div class="menu-info">
 
-<div class="menu-label">SIGNATURE</div>
+<div class="menu-category">
+SIGNATURE
+</div>
 
 <h3>Royal Biryani</h3>
 
 <p>
-Aromatic rice layered with rich spices and unforgettable flavour.
+Fragrant rice, rich spices and irresistible aroma.
 </p>
 
 </div>
@@ -945,20 +1292,26 @@ Aromatic rice layered with rich spices and unforgettable flavour.
 </div>
 
 
-<div class="menu-card">
+<div class="menu-card reveal">
+
+<div class="menu-image">
 
 <img
-src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=1000&q=85"
+src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=1200&q=90"
 alt="Kebab">
 
+</div>
+
 <div class="menu-info">
 
-<div class="menu-label">FROM THE GRILL</div>
+<div class="menu-category">
+FROM THE GRILL
+</div>
 
-<h3>Juicy Kebabs</h3>
+<h3>Kebabs</h3>
 
 <p>
-Freshly grilled favourites with delicious smoky flavour.
+Juicy grilled favourites packed with flavour.
 </p>
 
 </div>
@@ -966,20 +1319,53 @@ Freshly grilled favourites with delicious smoky flavour.
 </div>
 
 
-<div class="menu-card">
+<div class="menu-card reveal">
+
+<div class="menu-image">
 
 <img
-src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=85"
+src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1200&q=90"
+alt="Indian starters">
+
+</div>
+
+<div class="menu-info">
+
+<div class="menu-category">
+FAVOURITES
+</div>
+
+<h3>Starters</h3>
+
+<p>
+Perfect bites to begin your dining experience.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="menu-card reveal">
+
+<div class="menu-image">
+
+<img
+src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=90"
 alt="Indian food">
 
+</div>
+
 <div class="menu-info">
 
-<div class="menu-label">FAVOURITES</div>
+<div class="menu-category">
+SPECIAL
+</div>
 
-<h3>Indian Starters</h3>
+<h3>Indian Favourites</h3>
 
 <p>
-Perfect bites to begin your meal with family and friends.
+Comforting dishes prepared for every appetite.
 </p>
 
 </div>
@@ -987,20 +1373,26 @@ Perfect bites to begin your meal with family and friends.
 </div>
 
 
-<div class="menu-card">
+<div class="menu-card reveal">
+
+<div class="menu-image">
 
 <img
-src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
-alt="Indian meal">
+src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=90"
+alt="Restaurant food">
+
+</div>
 
 <div class="menu-info">
 
-<div class="menu-label">SPECIAL</div>
+<div class="menu-category">
+FAMILY
+</div>
 
 <h3>Family Meals</h3>
 
 <p>
-Comforting dishes prepared for sharing around the table.
+Delicious choices made for sharing around the table.
 </p>
 
 </div>
@@ -1008,20 +1400,26 @@ Comforting dishes prepared for sharing around the table.
 </div>
 
 
-<div class="menu-card">
+<div class="menu-card reveal">
+
+<div class="menu-image">
 
 <img
-src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1000&q=85"
-alt="Restaurant">
+src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=90"
+alt="Family dining">
+
+</div>
 
 <div class="menu-info">
 
-<div class="menu-label">DINING</div>
+<div class="menu-category">
+SHARIEFIA
+</div>
 
-<h3>Restaurant Favourites</h3>
+<h3>Dining Experience</h3>
 
 <p>
-A variety of delicious choices for every kind of craving.
+Good food, warm hospitality and memorable moments.
 </p>
 
 </div>
@@ -1029,32 +1427,13 @@ A variety of delicious choices for every kind of craving.
 </div>
 
 
-<div class="menu-card">
-
-<img
-src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=85"
-alt="Family restaurant">
-
-<div class="menu-info">
-
-<div class="menu-label">SHARIEFIA</div>
-
-<h3>Made With Care</h3>
-
-<p>
-Great food, warm hospitality and moments worth remembering.
-</p>
-
 </div>
 
-</div>
 
-</div>
+<div style="text-align:center;margin-top:40px;">
 
-<div style="text-align:center;margin-top:35px;">
-
-<a href="tel:+919742118589" class="btn btn-primary">
-Ask About Today's Menu
+<a href="tel:+919742118589" class="btn btn-gold">
+📞 Ask About Today's Menu
 </a>
 
 </div>
@@ -1064,27 +1443,26 @@ Ask About Today's Menu
 </section>
 
 
-<!-- ================= FEATURE ================= -->
+<!-- =======================================================
+     CTA
+======================================================= -->
 
-<section class="feature">
+<section class="cta">
 
 <div class="container">
 
-<div class="feature-content">
+<div class="cta-content reveal">
 
-<div class="hero-kicker">
-The Shariefia Experience
-</div>
+<small>THE SHARIEFIA EXPERIENCE</small>
 
-<h2>Good Food. Great Company. Memorable Moments.</h2>
+<h2>Good Food.<br>Great Company.</h2>
 
 <p>
-Whether you are stopping by for a quick meal or gathering
-with the whole family, Shariefia is a place where food and
-people come together.
+Bring your family, meet your friends and make your next
+meal a memorable one.
 </p>
 
-<a href="#contact" class="btn btn-primary">
+<a href="#contact" class="btn btn-gold">
 Plan Your Visit
 </a>
 
@@ -1095,47 +1473,81 @@ Plan Your Visit
 </section>
 
 
-<!-- ================= GALLERY ================= -->
+<!-- =======================================================
+     GALLERY
+======================================================= -->
 
 <section class="gallery" id="gallery">
 
 <div class="container">
 
-<div class="section-heading">
+<div class="section-head reveal">
 
-<small>Our Restaurant</small>
+<small>Visual Flavours</small>
 
-<h2>Food & Moments</h2>
+<h2>A Glimpse Inside</h2>
 
-<p>A glimpse of the Shariefia experience.</p>
+<p>Food, atmosphere and moments worth sharing.</p>
 
 </div>
 
-<div class="gallery-grid">
+
+<div class="gallery-grid reveal">
+
+
+<div class="gallery-item">
 
 <img
-src="https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=1000&q=85"
+src="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=1200&q=90"
 alt="Biryani">
 
+</div>
+
+
+<div class="gallery-item">
+
 <img
-src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=1000&q=85"
+src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=1000&q=90"
 alt="Kebabs">
 
+</div>
+
+
+<div class="gallery-item">
+
 <img
-src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=85"
+src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=90"
+alt="Indian food">
+
+</div>
+
+
+<div class="gallery-item">
+
+<img
+src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=90"
 alt="Food">
 
-<img
-src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
-alt="Indian cuisine">
+</div>
+
+
+<div class="gallery-item">
 
 <img
-src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1000&q=85"
-alt="Restaurant interior">
+src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1000&q=90"
+alt="Dining">
+
+</div>
+
+
+<div class="gallery-item">
 
 <img
-src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=85"
-alt="Restaurant dining">
+src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=90"
+alt="Restaurant">
+
+</div>
+
 
 </div>
 
@@ -1144,64 +1556,81 @@ alt="Restaurant dining">
 </section>
 
 
-<!-- ================= TESTIMONIALS ================= -->
+<!-- =======================================================
+     REVIEWS
+======================================================= -->
 
-<section class="testimonials">
+<section class="reviews" id="reviews">
 
 <div class="container">
 
-<div class="section-heading">
+<div class="section-head reveal">
 
 <small>Guest Experiences</small>
 
-<h2>What Our Guests Say</h2>
+<h2>What Guests Say</h2>
 
-<p>Real feedback makes every meal more meaningful.</p>
+<p>Memories are the best part of every meal.</p>
 
 </div>
 
-<div class="testimonial-grid">
 
-<div class="review">
+<div class="review-grid">
 
-<div class="stars">★★★★★</div>
+
+<div class="review reveal">
+
+<div class="stars">
+★★★★★
+</div>
 
 <p>
-“Great food, welcoming atmosphere and a comfortable
-place to enjoy a meal with family.”
+“Great place for spending time with family. The food and
+atmosphere make the experience enjoyable.”
 </p>
 
-<strong>— Guest Review</strong>
+<span class="review-name">
+Guest Experience
+</span>
 
 </div>
 
 
-<div class="review">
+<div class="review reveal">
 
-<div class="stars">★★★★★</div>
+<div class="stars">
+★★★★★
+</div>
 
 <p>
-“Delicious flavours and a nice place to spend time with
-friends and family.”
+“Delicious flavours and a comfortable place to enjoy a
+meal with friends and family.”
 </p>
 
-<strong>— Guest Review</strong>
+<span class="review-name">
+Guest Experience
+</span>
 
 </div>
 
 
-<div class="review">
+<div class="review reveal">
 
-<div class="stars">★★★★★</div>
+<div class="stars">
+★★★★★
+</div>
 
 <p>
-“A satisfying dining experience with friendly service
-and tasty food.”
+“A nice dining experience with tasty food and a welcoming
+atmosphere.”
 </p>
 
-<strong>— Guest Review</strong>
+<span class="review-name">
+Guest Experience
+</span>
 
 </div>
+
 
 </div>
 
@@ -1210,98 +1639,124 @@ and tasty food.”
 </section>
 
 
-<!-- ================= CONTACT ================= -->
+<!-- =======================================================
+     CONTACT
+======================================================= -->
 
 <section class="contact" id="contact">
 
 <div class="container">
 
-<div class="section-heading">
+<div class="section-head reveal">
 
-<small>Come Visit Us</small>
+<small>Visit Us</small>
 
-<h2>Find Shariefia</h2>
+<h2>Let's Meet at Shariefia</h2>
 
-<p>Your next delicious meal is waiting.</p>
+<p>Your next memorable meal starts here.</p>
 
 </div>
 
-<div class="contact-grid">
+
+<div class="contact-grid reveal">
+
 
 <div class="contact-card">
 
 <h3>Restaurant Details</h3>
 
+
 <div class="contact-row">
 
 <small>Restaurant</small>
 
-<strong>Shariefia Family Restaurant</strong>
+<strong>
+Shariefia Family Restaurant
+</strong>
 
 </div>
+
 
 <div class="contact-row">
 
 <small>Location</small>
 
-<strong>Anekal, Karnataka, India</strong>
+<strong>
+Anekal, Karnataka, India
+</strong>
 
 </div>
+
 
 <div class="contact-row">
 
 <small>Phone</small>
 
-<strong>+91 97421 18589</strong>
+<strong>
++91 97421 18589
+</strong>
 
 </div>
+
 
 <div class="contact-row">
 
 <small>Dining</small>
 
-<strong>Family Restaurant</strong>
+<strong>
+Family Restaurant
+</strong>
 
 </div>
 
-<div class="contact-buttons">
+
+<div class="hero-buttons">
 
 <a
 href="tel:+919742118589"
-class="btn btn-primary">
-📞 Call Restaurant
+class="btn btn-gold">
+📞 Call Now
 </a>
+
 
 <a
 href="https://wa.me/919742118589"
 target="_blank"
-class="btn btn-secondary">
+class="btn btn-outline">
 💬 WhatsApp
 </a>
 
 </div>
 
+
 </div>
 
 
-<div class="map-box">
+<div class="map">
 
 <div>
 
-<h3>Shariefia Family Restaurant</h3>
+<h3>
+Shariefia Family Restaurant
+</h3>
 
-<p>Anekal • Karnataka</p>
+<p>
+Anekal • Karnataka
+</p>
 
 <a
 href="https://www.google.com/maps/search/?api=1&query=Shariefia+Family+Restaurant+Anekal+Karnataka"
 target="_blank"
-class="btn btn-primary">
-📍 Open Google Maps
+class="btn btn-gold">
+
+📍 Get Directions
+
 </a>
 
 </div>
 
 </div>
+
 
 </div>
 
@@ -1310,20 +1765,28 @@ class="btn btn-primary">
 </section>
 
 
-<!-- ================= FOOTER ================= -->
+<!-- =======================================================
+     FOOTER
+======================================================= -->
 
 <footer>
 
 <div class="container">
 
-<h3>SHARIEFIA</h3>
+<div class="footer-logo">
+SHARIEFIA
+</div>
 
-<p>Family Restaurant • Anekal, Karnataka</p>
+<p>
+FAMILY RESTAURANT • ANEKAL • KARNATAKA
+</p>
 
-<p>Authentic Flavours. Memorable Moments.</p>
+<p>
+Authentic Flavours. Memorable Moments.
+</p>
 
-<p style="margin-top:18px;">
-© 2026 Shariefia Family Restaurant. All Rights Reserved.
+<p style="margin-top:20px;">
+© 2026 Shariefia Family Restaurant
 </p>
 
 </div>
@@ -1331,13 +1794,163 @@ class="btn btn-primary">
 </footer>
 
 
-<!-- FLOATING CALL -->
+<!-- =======================================================
+     FLOATING BUTTONS
+======================================================= -->
+
+<div class="floating">
+
+<a
+href="https://wa.me/919742118589"
+target="_blank"
+class="float-btn float-whatsapp">
+💬
+</a>
 
 <a
 href="tel:+919742118589"
-class="floating-call">
+class="float-btn float-call">
 ☎
 </a>
 
+</div>
+
+
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
+
+<script>
+
+/* PAGE LOADER */
+
+window.addEventListener("load",function(){
+
+    setTimeout(function(){
+
+        document.getElementById("loader")
+        .classList.add("hide");
+
+    },700);
+
+});
+
+
+/* MOBILE MENU */
+
+function toggleMenu(){
+
+    document
+    .getElementById("navLinks")
+    .classList
+    .toggle("active");
+
+}
+
+
+/* CLOSE MOBILE MENU AFTER CLICK */
+
+document.querySelectorAll(".nav-links a").forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+        document
+        .getElementById("navLinks")
+        .classList
+        .remove("active");
+
+    });
+
+});
+
+
+/* SCROLL REVEAL */
+
+const reveals=document.querySelectorAll(".reveal");
+
+const observer=new IntersectionObserver(
+
+function(entries){
+
+    entries.forEach(function(entry){
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("show");
+
+            observer.unobserve(entry.target);
+
+        }
+
+    });
+
+},
+{
+    threshold:.12
+}
+
+);
+
+reveals.forEach(function(element){
+
+    observer.observe(element);
+
+});
+
+
+/* COUNTER ANIMATION */
+
+const counters=document.querySelectorAll(".counter-number");
+
+let counterStarted=false;
+
+function startCounters(){
+
+    if(counterStarted) return;
+
+    const section=document.querySelector(".counter-section");
+
+    const rect=section.getBoundingClientRect();
+
+    if(rect.top < window.innerHeight-100){
+
+        counterStarted=true;
+
+        counters.forEach(function(counter){
+
+            const target=Number(counter.dataset.target);
+
+            let current=0;
+
+            const increment=Math.max(1,Math.ceil(target/60));
+
+            const timer=setInterval(function(){
+
+                current+=increment;
+
+                if(current>=target){
+
+                    current=target;
+
+                    clearInterval(timer);
+
+                }
+
+                counter.textContent=current+"+";
+
+            },25);
+
+        });
+
+    }
+
+}
+
+window.addEventListener("scroll",startCounters);
+
+startCounters();
+
+</script>
+
 </body>
-  </html>
+    </html>
